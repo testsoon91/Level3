@@ -80,10 +80,8 @@ public class BlogService {
     private Blog passCheck(Blog blog, BlogRequestDto requestDto){
         //비밀번호 확인
         if(blog.getPassword() != null && !blog.getPassword().equals(requestDto.getPassword())){
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new IllegalArgumentException("비번이 일치하지 않습니다.");
         }
         return blog;
     }
 }
-
-// 수정
