@@ -1,4 +1,4 @@
-package com.sparta.myblog.entity;
+package com.sparta.blog.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

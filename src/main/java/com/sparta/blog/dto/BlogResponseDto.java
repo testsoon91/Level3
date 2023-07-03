@@ -1,12 +1,12 @@
 package com.sparta.blog.dto;
 
-import com.sparta.myblog.entity.Myblog;
+import com.sparta.blog.entity.Blog;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
-public class MyblogResponseDto {
+public class BlogResponseDto {
     private Long id;
     private String title;
     private String username;
@@ -14,12 +14,12 @@ public class MyblogResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
-    public MyblogResponseDto(Myblog myblog) {
-        this.id = myblog.getId();
-        this.title = myblog.getTitle();
-        this.username = myblog.getUsername();
-        this.contents = myblog.getContents();
-        this.createdAt = myblog.getCreatedAt();
-        this.modifiedAt = myblog.getModifiedAt();
+    public BlogResponseDto(Blog blog) {
+        this.id = blog.getId();
+        this.title = blog.getTitle();
+        this.username = blog.getUsername();
+        this.contents = blog.getContents();
+        this.createdAt = blog.getCreatedAt();
+        this.modifiedAt = blog.getModifiedAt();
     }
 }

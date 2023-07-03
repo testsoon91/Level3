@@ -1,44 +1,44 @@
 package com.sparta.blog.controller;
 
-import com.sparta.myblog.dto.MyblogRequestDto;
-import com.sparta.myblog.dto.MyblogResponseDto;
-import com.sparta.myblog.service.MyblogService;
+import com.sparta.blog.dto.BlogRequestDto;
+import com.sparta.blog.dto.BlogResponseDto;
+import com.sparta.blog.service.BlogService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class MyblogController {
+public class BlogController {
 
-    private final MyblogService myblogService;
+    private final BlogService blogService;
 
-    public MyblogController(MyblogService myblogService){
-        this.myblogService = myblogService;
+    public BlogController(BlogService blogService){
+        this.blogService = blogService;
     }
     @PostMapping("/blog")
-    public MyblogResponseDto createMyblog(@RequestBody MyblogRequestDto requestDto){
-        return myblogService.createMyblog(requestDto);
+    public BlogResponseDto createBlog(@RequestBody BlogRequestDto requestDto){
+        return blogService.createBlog(requestDto);
     }
 
     @GetMapping("/blog")
-    public List<MyblogResponseDto> getMyblog(){
-        return myblogService.getMyblog();
+    public List<BlogResponseDto> getBlog(){
+        return blogService.getBlog();
     }
 
     //조회기능 추가
     @GetMapping("/blog/{id}")
-    public MyblogResponseDto getMyblog(@PathVariable Long id, @RequestBody MyblogRequestDto requestDto){
-        return myblogService.getMyblog(id, requestDto);
+    public BlogResponseDto getBlog(@PathVariable Long id, @RequestBody BlogRequestDto requestDto){
+        return blogService.getBlog(id, requestDto);
     }
 
     @PutMapping("/blog/{id}")
-    public Long updateMyblog(@PathVariable Long id, @RequestBody MyblogRequestDto requestDto){
-        return myblogService.updateMyblog(id, requestDto);
+    public Long updateBlog(@PathVariable Long id, @RequestBody BlogRequestDto requestDto){
+        return blogService.updateBlog(id, requestDto);
     }
 
     @DeleteMapping("/blog/{id}")
-    public Long deleteMyblog(@PathVariable Long id, @RequestBody MyblogRequestDto requestDto){
-        return myblogService.deleteMyblog(id, requestDto);
+    public Long deleteMyblog(@PathVariable Long id, @RequestBody BlogRequestDto requestDto){
+        return blogService.deleteBlog(id, requestDto);
     }
 }

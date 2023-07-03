@@ -1,79 +1,87 @@
 package com.sparta.blog.service;
 
-import com.sparta.myblog.dto.MyblogRequestDto;
-import com.sparta.myblog.dto.MyblogResponseDto;
-import com.sparta.myblog.entity.Myblog;
-import com.sparta.myblog.repository.MyblogRepository;
+import com.sparta.blog.dto.BlogRequestDto;
+import com.sparta.blog.dto.BlogResponseDto;
+import com.sparta.blog.entity.Blog;
+import com.sparta.blog.repository.BlogRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-public class MyblogService {
-    private final MyblogRepository myblogRepository;
+public class BlogService {
+    private final BlogRepository blogRepository;
 
-    public MyblogService(MyblogRepository myblogRepository){
-        this.myblogRepository = myblogRepository;
+    public BlogService(BlogRepository blogRepository){
+        this.blogRepository = blogRepository;
     }
 
-    public MyblogResponseDto createMyblog(MyblogRequestDto requestDto) {
+    public BlogResponseDto createBlog(BlogRequestDto requestDto) {
         //RequestDto -> Entity
-        Myblog myblog = new Myblog(requestDto);
+        Blog blog = new Blog(requestDto);
 
         //DB 저장
-        Myblog saveMyblog = myblogRepository.save(myblog);
+        Blog saveBlog = blogRepository.save(blog);
 
         //Entity -> ResponseDto
-        MyblogResponseDto myblogResponseDto = new MyblogResponseDto(myblog);
+        BlogResponseDto blogResponseDto = new BlogResponseDto(blog);
 
-        return myblogResponseDto;
+        return blogResponseDto;
     }
 
-    public List<MyblogResponseDto> getMyblog() {
+    public List<BlogResponseDto> getBlog() {
         //DB 조회
-        return myblogRepository.findAllByOrderByModifiedAtDesc().stream().map(MyblogResponseDto::new).toList();
+        return blogRepository.findAllByOrderByModifiedAtDesc().stream().map(BlogResponseDto::new).toList();
     }
 
     @Transactional
-    public Long updateMyblog(Long id, MyblogRequestDto requestDto) {
+    public Long updateBlog(Long id, BlogRequestDto requestDto) {
         //해당 글이 DB에 존재하는지 확인
-        Myblog myblog = findMyblog(id, requestDto);
+        Blog blog = findBlog(id, requestDto);
+        //비밀번호 확인
+        blog = passCheck(blog, requestDto);
 
         //글 내용 수정
-        myblog.update(requestDto);
+        blog.update(requestDto);
 
         return id;
     }
 
-    public Long deleteMyblog(Long id, MyblogRequestDto requestDto) {
+    public Long deleteBlog(Long id, BlogRequestDto requestDto) {
         //해당 글이 DB에 존재하는지 확인
-        Myblog myblog = findMyblog(id, requestDto);
+        Blog blog = findBlog(id, requestDto);
+        //비밀번호 확인
+        blog = passCheck(blog, requestDto);
 
         //해당 글 삭제하기
-        myblogRepository.delete(myblog);
+        blogRepository.delete(blog);
 
         return id;
     }
 
     //글 조회기능 추가
-    public MyblogResponseDto getMyblog(Long id, MyblogRequestDto requestDto) {
+    public BlogResponseDto getBlog(Long id, BlogRequestDto requestDto) {
         //해당 글이 DB에 존재하는지 확인
-        Myblog myblog = findMyblog(id, requestDto);
+        Blog blog = findBlog(id, requestDto);
 
-        MyblogResponseDto myblogResponseDto = new MyblogResponseDto(myblog);
+        BlogResponseDto blogResponseDto = new BlogResponseDto(blog);
 
-        return myblogResponseDto;
+        return blogResponseDto;
     }
 
-    private Myblog findMyblog(Long id, MyblogRequestDto requestDto){
-        Myblog myblog = myblogRepository.findById(id).orElseThrow(()->
+    private Blog findBlog(Long id, BlogRequestDto requestDto){
+        Blog blog = blogRepository.findById(id).orElseThrow(()->
                 new IllegalArgumentException("선택한 글은 존재하지 않습니다."));
 
+        return blog;
+    }
+
+    private Blog passCheck(Blog blog, BlogRequestDto requestDto){
         //비밀번호 확인
-        if(!myblog.getPassword().equals(requestDto.getPassword())){
+        if(blog.getPassword() != null && !blog.getPassword().equals(requestDto.getPassword())){
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
-        return myblog;
+        return blog;
     }
 }
