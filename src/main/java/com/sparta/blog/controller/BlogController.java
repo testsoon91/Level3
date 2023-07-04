@@ -2,6 +2,7 @@ package com.sparta.blog.controller;
 
 import com.sparta.blog.dto.BlogRequestDto;
 import com.sparta.blog.dto.BlogResponseDto;
+import com.sparta.blog.dto.StatusCodeDto;
 import com.sparta.blog.service.BlogService;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +39,7 @@ public class BlogController {
     }
 
     @DeleteMapping("/blog/{id}")
-    public String deleteBlog(@PathVariable Long id, @RequestBody BlogRequestDto requestDto){
+    public StatusCodeDto deleteBlog(@PathVariable Long id, @RequestBody BlogRequestDto requestDto){
         return blogService.deleteBlog(id, requestDto);
     }
 }

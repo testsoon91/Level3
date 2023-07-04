@@ -2,8 +2,10 @@ package com.sparta.blog.service;
 
 import com.sparta.blog.dto.BlogRequestDto;
 import com.sparta.blog.dto.BlogResponseDto;
+import com.sparta.blog.dto.StatusCodeDto;
 import com.sparta.blog.entity.Blog;
 import com.sparta.blog.repository.BlogRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,7 +50,7 @@ public class BlogService {
         return new BlogResponseDto(blog);
     }
 
-    public String deleteBlog(Long id, BlogRequestDto requestDto) {
+    public StatusCodeDto deleteBlog(Long id, BlogRequestDto requestDto) {
         //해당 글이 DB에 존재하는지 확인
         Blog blog = findBlog(id);
         //비밀번호 확인
@@ -57,7 +59,7 @@ public class BlogService {
         //해당 글 삭제하기
         blogRepository.delete(blog);
 
-        return "게시글 삭제 성공";
+        return new StatusCodeDto(HttpStatus.OK.value(),"게시글 삭제 성공");
     }
 
     //글 조회기능 추가
