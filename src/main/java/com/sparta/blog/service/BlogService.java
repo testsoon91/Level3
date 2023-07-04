@@ -30,47 +30,47 @@ public class BlogService {
         return blogResponseDto;
     }
 
-    public List<BlogResponseDto> getBlog() {
+    public List<BlogResponseDto> getBlogs() {
         //DB 조회
         return blogRepository.findAllByOrderByModifiedAtDesc().stream().map(BlogResponseDto::new).toList();
     }
 
     @Transactional
-    public Long updateBlog(Long id, BlogRequestDto requestDto) {
+    public BlogResponseDto updateBlog(Long id, BlogRequestDto requestDto) {
         //해당 글이 DB에 존재하는지 확인
-        Blog blog = findBlog(id, requestDto);
+        Blog blog = findBlog(id);
         //비밀번호 확인
         blog = passCheck(blog, requestDto);
 
         //글 내용 수정
         blog.update(requestDto);
 
-        return id;
+        return new BlogResponseDto(blog);
     }
 
-    public Long deleteBlog(Long id, BlogRequestDto requestDto) {
+    public String deleteBlog(Long id, BlogRequestDto requestDto) {
         //해당 글이 DB에 존재하는지 확인
-        Blog blog = findBlog(id, requestDto);
+        Blog blog = findBlog(id);
         //비밀번호 확인
         blog = passCheck(blog, requestDto);
 
         //해당 글 삭제하기
         blogRepository.delete(blog);
 
-        return id;
+        return "게시글 삭제 성공";
     }
 
     //글 조회기능 추가
-    public BlogResponseDto getBlog(Long id, BlogRequestDto requestDto) {
+    public BlogResponseDto getBlog(Long id) {
         //해당 글이 DB에 존재하는지 확인
-        Blog blog = findBlog(id, requestDto);
+        Blog blog = findBlog(id);
 
         BlogResponseDto blogResponseDto = new BlogResponseDto(blog);
 
         return blogResponseDto;
     }
 
-    private Blog findBlog(Long id, BlogRequestDto requestDto){
+    private Blog findBlog(Long id){
         Blog blog = blogRepository.findById(id).orElseThrow(()->
                 new IllegalArgumentException("선택한 글은 존재하지 않습니다."));
 
@@ -80,7 +80,7 @@ public class BlogService {
     private Blog passCheck(Blog blog, BlogRequestDto requestDto){
         //비밀번호 확인
         if(blog.getPassword() != null && !blog.getPassword().equals(requestDto.getPassword())){
-            throw new IllegalArgumentException("비번이 일치하지 않습니다.");
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
         return blog;
     }
