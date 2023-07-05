@@ -25,7 +25,6 @@ public class UserController {
         this.userService = userService;
     }
 
-
     @GetMapping("/user/login-page")
     public String loginPage(){
         return "login";

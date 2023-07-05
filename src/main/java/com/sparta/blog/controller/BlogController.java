@@ -26,8 +26,8 @@ public class BlogController {
     }
 
     @GetMapping("/blog")
-    public List<BlogResponseDto> getBlog(){
-        return blogService.getBlog();
+    public List<BlogResponseDto> getBlogs(){
+        return blogService.getBlogs();
     }
 
     //조회기능 추가
