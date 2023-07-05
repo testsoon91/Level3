@@ -1,18 +1,14 @@
 package com.sparta.blog.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 
-@Getter
-@NoArgsConstructor
+@Data
 public class StatusCodeDto {
+    private String msg;
+    private int status;
 
-    private int statusCode;
-    private String responseMessage;
-
-    public StatusCodeDto(int statusCode, String responseMessage) {
-        this.statusCode = statusCode;
-        this.responseMessage = responseMessage;
+    public StatusCodeDto(String msg, int status){
+        this.msg = msg;
+        this.status = status;
     }
-
 }

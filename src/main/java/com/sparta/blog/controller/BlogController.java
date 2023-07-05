@@ -2,7 +2,9 @@ package com.sparta.blog.controller;
 
 import com.sparta.blog.dto.BlogRequestDto;
 import com.sparta.blog.dto.BlogResponseDto;
+import com.sparta.blog.dto.LoginRequestDto;
 import com.sparta.blog.dto.StatusCodeDto;
+import com.sparta.blog.entity.Blog;
 import com.sparta.blog.jwt.JwtUtil;
 import com.sparta.blog.service.BlogService;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +42,7 @@ public class BlogController {
     }
 
     @DeleteMapping("/blog/{id}")
-    public StatusCodeDto deleteBlog(@PathVariable Long id, @CookieValue(JwtUtil.AUTHORIZATION_HEADER) String tokenValue){
+    public StatusCodeDto deleteMyblog(@PathVariable Long id, @CookieValue(JwtUtil.AUTHORIZATION_HEADER) String tokenValue){
         return blogService.deleteBlog(id, tokenValue);
     }
 }

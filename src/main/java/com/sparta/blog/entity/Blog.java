@@ -1,6 +1,8 @@
 package com.sparta.blog.entity;
 
 import com.sparta.blog.dto.BlogRequestDto;
+import com.sparta.blog.dto.LoginRequestDto;
+import com.sparta.blog.jwt.JwtUtil;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
