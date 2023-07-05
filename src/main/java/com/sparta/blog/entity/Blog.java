@@ -1,6 +1,8 @@
 package com.sparta.blog.entity;
 
 import com.sparta.blog.dto.BlogRequestDto;
+import com.sparta.blog.dto.LoginRequestDto;
+import com.sparta.blog.jwt.JwtUtil;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,25 +23,15 @@ public class Blog extends Timestamped {
     private String username;
     @Column(name = "contents", nullable = false, length = 500)
     private String contents;
-    @Column(name = "password", nullable = false)
-    private String password;
 
-//    //User table과 연결
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "id", nullable = false)
-//    private User user;
-
-    public Blog(BlogRequestDto requestDto) {
+    public Blog(BlogRequestDto requestDto, String loginname) {
         this.title = requestDto.getTitle();
-        this.username = requestDto.getUsername();
+        this.username = loginname;
         this.contents = requestDto.getContents();
-        this.password = requestDto.getPassword();
     }
 
     public void update(BlogRequestDto requestDto) {
-        this.username = requestDto.getUsername();
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
-        this.password = requestDto.getPassword();
     }
 }

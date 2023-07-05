@@ -2,6 +2,10 @@ package com.sparta.blog.controller;
 
 import com.sparta.blog.dto.BlogRequestDto;
 import com.sparta.blog.dto.BlogResponseDto;
+import com.sparta.blog.dto.LoginRequestDto;
+import com.sparta.blog.dto.StatusCodeDto;
+import com.sparta.blog.entity.Blog;
+import com.sparta.blog.jwt.JwtUtil;
 import com.sparta.blog.service.BlogService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +21,8 @@ public class BlogController {
         this.blogService = blogService;
     }
     @PostMapping("/blog")
-    public BlogResponseDto createBlog(@RequestBody BlogRequestDto requestDto){
-        return blogService.createBlog(requestDto);
+    public BlogResponseDto createBlog(@RequestBody BlogRequestDto requestDto, @CookieValue(JwtUtil.AUTHORIZATION_HEADER) String tokenValue){
+        return blogService.createBlog(requestDto, tokenValue);
     }
 
     @GetMapping("/blog")
@@ -28,17 +32,17 @@ public class BlogController {
 
     //조회기능 추가
     @GetMapping("/blog/{id}")
-    public BlogResponseDto getBlog(@PathVariable Long id, @RequestBody BlogRequestDto requestDto){
-        return blogService.getBlog(id, requestDto);
+    public BlogResponseDto getBlog(@PathVariable Long id){
+        return blogService.getBlog(id);
     }
 
     @PutMapping("/blog/{id}")
-    public Long updateBlog(@PathVariable Long id, @RequestBody BlogRequestDto requestDto){
-        return blogService.updateBlog(id, requestDto);
+    public BlogResponseDto updateBlog(@PathVariable Long id, @RequestBody BlogRequestDto requestDto, @CookieValue(JwtUtil.AUTHORIZATION_HEADER) String tokenValue){
+        return blogService.updateBlog(id, requestDto, tokenValue);
     }
 
     @DeleteMapping("/blog/{id}")
-    public Long deleteMyblog(@PathVariable Long id, @RequestBody BlogRequestDto requestDto){
-        return blogService.deleteBlog(id, requestDto);
+    public StatusCodeDto deleteMyblog(@PathVariable Long id, @CookieValue(JwtUtil.AUTHORIZATION_HEADER) String tokenValue){
+        return blogService.deleteBlog(id, tokenValue);
     }
 }
