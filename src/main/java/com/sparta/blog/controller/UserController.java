@@ -5,6 +5,7 @@ import com.sparta.blog.dto.SignupRequestDto;
 import com.sparta.blog.dto.StatusCodeDto;
 import com.sparta.blog.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class UserController {
     }
 
     @PostMapping("/user/signup")
-    public StatusCodeDto signup(@RequestBody SignupRequestDto requestDto) {
+    public StatusCodeDto signup(@RequestBody @Valid SignupRequestDto requestDto) {
         userService.signup(requestDto);
 
         return new StatusCodeDto(HttpStatus.OK.value(),"회원가입 성공");

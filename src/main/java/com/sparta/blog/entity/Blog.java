@@ -9,7 +9,7 @@ import lombok.Setter;
 @Entity // JPA가 관리할 수 있는 Entity 클래스 지정
 @Getter
 @Setter
-@Table(name = "myblog")
+@Table(name = "blog")
 @NoArgsConstructor
 public class Blog extends Timestamped {
     @Id
@@ -21,20 +21,15 @@ public class Blog extends Timestamped {
     private String username;
     @Column(name = "contents", nullable = false, length = 500)
     private String contents;
-    @Column(name = "password", nullable = false)
-    private String password;
 
-    public Blog(BlogRequestDto requestDto) {
+    public Blog(BlogRequestDto requestDto, String loginname) {
         this.title = requestDto.getTitle();
-        this.username = requestDto.getUsername();
+        this.username = loginname;
         this.contents = requestDto.getContents();
-        this.password = requestDto.getPassword();
     }
 
     public void update(BlogRequestDto requestDto) {
-        this.username = requestDto.getUsername();
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
-        this.password = requestDto.getPassword();
     }
 }
