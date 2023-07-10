@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-
+// 테스트
 @RestController
 @RequestMapping("/api")
 public class AuthController {
